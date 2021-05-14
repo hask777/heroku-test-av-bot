@@ -43,7 +43,12 @@ def job():
     with open(brands, 'w', encoding='utf-8') as json_file:
         json.dump(list_brands, json_file, ensure_ascii = False, indent =4)
 
-schedule.every(30).seconds.do(job)
+    url = "https://test-app-avparser-bot.herokuapp.com/brands"
+    data = list_brands
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    r = requests.post(url, data=json.dumps(data), headers=headers)
+
+schedule.every(5).seconds.do(job)
 # schedule.every(10).minutes.do(job)
 # schedule.every().hour.do(job)
 # schedule.every().day.at("10:30").do(job)
